@@ -5,7 +5,7 @@ BINUTILS="binutils-2.31.1"
 GDB="gdb-8.2"
 
 CURRDIR=`pwd`
-PREFIX=$CURRDIR/../cross
+PREFIX=$CURRDIR/cross
 WORKDIR=`mktemp -d`
 
 echo "Installing cross-compiler to $PREFIX"

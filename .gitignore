@@ -1,1 +1,7 @@
 cross
+*.o
+*ao
+*.aso
+*.d
+*.elf
+*.map
