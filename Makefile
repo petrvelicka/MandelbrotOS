@@ -47,9 +47,9 @@ ISO=mandelbrotos.iso
 
 .PHONY: all build clean qemu
 
-all: build qemu
+all: $(ISO)
 
-build: $(KERNEL)
+$(ISO): $(KERNEL)
 	mkdir -p iso/boot/grub
 	cp $(KERNEL) iso/boot/$(KERNEL)
 	cp resources/grub.cfg iso/boot/grub
@@ -67,7 +67,7 @@ $(KERNEL): $(COBJECTS) $(AOBJECTS) $(NASMOBJECTS)
 %.aso: %.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
-qemu: iso
+qemu: $(ISO) 
 	$(QEMU)
 
 clean:
