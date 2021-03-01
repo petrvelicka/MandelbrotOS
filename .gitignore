@@ -1,5 +1,4 @@
 # Output files
-
 iso/
 cross/
 
@@ -13,5 +12,6 @@ iso/
 *ao
 *.aso
 *.d
+*.iso
 *.elf
 *.map
