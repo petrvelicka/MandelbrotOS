@@ -1,5 +1,14 @@
-cross
-iso
+# Output files
+
+iso/
+cross/
+
+# build results
+iso/
+
+# editor settings
+.vscode/
+
 *.o
 *ao
 *.aso
