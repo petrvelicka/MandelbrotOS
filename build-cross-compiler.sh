@@ -4,6 +4,12 @@ GCC="gcc-8.2.0"
 BINUTILS="binutils-2.31.1"
 GDB="gdb-8.2"
 
+# make multithreading
+NUMCPUS=$(nproc)
+NUMCPUSPLUSONE=$(( NUMCPUS + 1 ))
+MAKEFLAGS="-j${NUMCPUSPLUSONE} -l${NUMCPUS}"
+
+
 CURRDIR=`pwd`
 PREFIX=$CURRDIR/cross
 WORKDIR=`mktemp -d`
