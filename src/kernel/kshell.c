@@ -10,6 +10,7 @@
 #include <kernel/cpuid.h>
 #include <kernelinf.h>
 #include <kernel/pit.h>
+#include <kernel/power.h>
 
 void prompt()
 {
@@ -177,6 +178,9 @@ int kshell(multiboot_info_t *mbi, unsigned long magic)
       else if (check_cmd("sysfetch"))
       {
          sysfetch();
+      }
+      else if (check_cmd("reboot")) {
+          reboot();
       }
       else if (check_cmd(0))
       {
