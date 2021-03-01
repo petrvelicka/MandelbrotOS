@@ -1,4 +1,13 @@
-cross
+# cross-compiler
+cross/
+
+# build results
+iso/
+
+# editor settings
+.vscode/
+
+# build files
 *.o
 *ao
 *.aso
