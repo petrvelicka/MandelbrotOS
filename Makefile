@@ -6,7 +6,6 @@ CC=$(CROSS)/bin/$(ARCH)-elf-gcc
 LD=$(CROSS)/bin/$(ARCH)-elf-ld
 
 AS=nasm
-QEMU=qemu-system-x86_64 --cdrom mandelbrotos.iso
 GRUB_MKRESCUE?=grub-mkrescue
 
 LIBGCC=$(CROSS)/lib/gcc/$(ARCH)-elf/8.2.0/libgcc.a
@@ -17,7 +16,7 @@ DFLAGS=-g -DDEBUG -O0
 
 ASFLAGS=-f elf
 
-LDFLAGS=-melf_i386 -nostdlib -T src/arch/$(ARCH)/linker.ld -Map=mandelbrotos.map 
+LDFLAGS=-melf_i386 -nostdlib -T src/arch/$(ARCH)/linker.ld -Map=build/mandelbrotos.map 
 
 CSOURCES:=\
 $(wildcard src/kernel/*.c)\
@@ -38,12 +37,13 @@ OBJS=\
 $(ARCH_OBJS)\
 $(KERNEL_OBJS)\
 
-KERNEL=mandelbrotos.elf
+KERNEL=build/mandelbrotos.elf
 
 STAGE2=build/stage2_eltorito
 GENISOIMAGE=genisoimage
 
-ISO=mandelbrotos.iso
+ISO=build/mandelbrotos.iso
+QEMU=qemu-system-x86_64 -cdrom $(ISO)
 
 .PHONY: all build clean qemu
 
@@ -51,11 +51,12 @@ all: $(ISO)
 
 $(ISO): $(KERNEL)
 	mkdir -p iso/boot/grub
-	cp $(KERNEL) iso/boot/$(KERNEL)
+	cp $(KERNEL) iso/boot/$(notdir $(KERNEL))
 	cp resources/grub.cfg iso/boot/grub
 	$(GRUB_MKRESCUE) -o $(ISO) iso
 
 $(KERNEL): $(COBJECTS) $(AOBJECTS) $(NASMOBJECTS)
+	mkdir -p build
 	$(LD) $(LDFLAGS) $(AOBJECTS) $(COBJECTS) $(NASMOBJECTS) $(LIBGCC) -o $@
 
 %.o: %.c
@@ -72,5 +73,6 @@ qemu: $(ISO)
 
 clean:
 	rm -rf iso
+	rm -rf build
 	find src/ -type f -name "*o" -delete
 	rm -f $(ISO)
