@@ -3,6 +3,7 @@ cross/
 
 # build results
 iso/
+mandelbrotos.iso
 
 # editor settings
 .vscode/
